@@ -23,7 +23,9 @@ aplikasi ini dibuat untuk memonitor kendaraan PT Timah Indonesia yang dapat dimo
 - Masuk terminal git dan masukkan perintah terminal git clone https://github.com/hajir1/magang2024.git
 - masuk folder backEnd dan masukkan perintah terminal npm i
 - jalankan perintah terminal npm run dev (disarankan tidak di ubah sedikitpun dari kode)
-
+- jalankan xampp
+- import file migrate yang terletak di backend/prisma/migrations/code/migration.sql ke phpmyadmin atau 
+    menggunakan terminal
 
 ## Panduan Menggunakan Website
 - Silahkan login tersedia 2 users 
