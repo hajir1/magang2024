@@ -1,3 +1,4 @@
+jika dokumentasi disini kurang jelas silahkan kunjungi https://github.com/hajir1/magang2024
 # Apikasi Website Monitor Kendaraan
 aplikasi ini dibuat untuk memonitor kendaraan PT Timah Indonesia yang dapat dimonitor di telegram
 
