@@ -91,7 +91,6 @@ const GetDataMobil = () => {
     onSubmit: (value) => {
       APIPostPemesanan(value, (cb) => {
         if (cb?.status === 200) {
-         
           setPakaiById(null);
           window.scrollTo({ top: 0, behavior: "smooth" });
           setSuksesPakai(true);
@@ -105,7 +104,9 @@ const GetDataMobil = () => {
       });
     },
   });
-
+  useEffect(() => {
+    console.log(mobils);
+  }, []);
   const handlePakaiById = (e, id) => {
     const dataId = mobils.find((item) => item.id === id);
     setPakaiById(dataId.id);
@@ -114,11 +115,11 @@ const GetDataMobil = () => {
   return (
     <div className={`${dashboard ? "w-4/5 p-1" : "w-full"} relative`}>
       {mobils.length < 1 && (
-        <h1 className="">
+        <h1 className="lg:ml-4">
           Tidak ada data kendaraan silahkan isi di tambah kendaraan
         </h1>
       )}
-      {mobils?.length <= 1 && (
+      {mobils?.length > 1 && (
         <h1 className="font-semibold text-base italic text-red-600 text-right mr-2">
           jika kendaraan dalam ekspedisi tidak bisa dihapus
         </h1>
