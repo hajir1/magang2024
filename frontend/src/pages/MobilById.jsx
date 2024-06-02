@@ -89,6 +89,7 @@ const DataMobilById = () => {
           <AlertSukses
             handleClose={() => {
               setSukses(!sukses);
+              window.location.reload();
             }}
             title={"sukses menambah data"}
             quote={"sukses memambahkan data service kendaraan"}
