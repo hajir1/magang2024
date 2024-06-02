@@ -1,0 +1,29 @@
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "password":"admin",
+    "role":"admin"
+}
+
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "username":"penerima",
+    "password":"pemerima"
+}
+
+###
+get  http://localhost:3000/users
+###
+get  http://localhost:3000/me
+
+###
+delete   http://localhost:3000/logout
+
+###
+delete   http://localhost:3000/pemesanan/tolak/7

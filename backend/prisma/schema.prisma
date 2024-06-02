@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model driver {
+  id                Int                 @id @default(autoincrement())
+  nama_driver       String              @unique(map: "nama_driver") @db.VarChar(20)
+  jasa              String              @db.VarChar(30)
+  bekerja           Boolean?            @default(false)
+  gambar            String              @db.VarChar(100)
+  kode_karyawan     String              @db.VarChar(100)
+  url               String              @db.VarChar(100)
+  pemesanan         pemesanan?
+  riwayat_pemakaian riwayat_pemakaian[]
+}
+
+model jadwal_service {
+  id            Int     @id @default(autoincrement())
+  jenis_service String? @db.VarChar(100)
+  biaya         Int?
+  waktu         String  @db.VarChar(100)
+  mobil_id      String? @db.VarChar(50)
+  mobils        mobils? @relation(fields: [mobil_id], references: [nama_mobil], onDelete: Restrict, onUpdate: Restrict, map: "fk_jadwal_mobil")
+
+  @@index([mobil_id], map: "fk_jadwalService_to_mobils")
+}
+
+model mobils {
+  id                Int                 @id @default(autoincrement())
+  nama_mobil        String              @unique(map: "nama_mobil") @db.VarChar(50)
+  gambar            String?             @db.VarChar(100)
+  url               String?             @db.VarChar(100)
+  jenis             String?             @db.VarChar(30)
+  kondisi           String?             @db.VarChar(100)
+  pemilik           String?             @db.VarChar(30)
+  dipakai           Boolean?            @default(false)
+  jadwal_service    jadwal_service[]
+  pemesanan         pemesanan?
+  riwayat_pemakaian riwayat_pemakaian[]
+}
+
+model riwayat_pemakaian {
+  id        Int     @id @default(autoincrement())
+  waktu     String? @db.VarChar(100)
+  mobil_id  String? @db.VarChar(50)
+  driver_id String? @db.VarChar(30)
+  driver    driver? @relation(fields: [driver_id], references: [nama_driver], onDelete: Restrict, onUpdate: Restrict, map: "fk_riwayat_driver")
+  mobils    mobils? @relation(fields: [mobil_id], references: [nama_mobil], onDelete: Restrict, onUpdate: Restrict, map: "fk_riwayat_mobil")
+
+  @@index([mobil_id], map: "fk_riwayatPemakaian_to_mobils")
+  @@index([driver_id], map: "fk_riwayat_driver")
+}
+
+model users {
+  id       Int     @id @default(autoincrement())
+  username String  @unique(map: "username") @db.VarChar(20)
+  password String? @db.VarChar(100)
+  role     String  @db.VarChar(40)
+  uuid     String  @db.VarChar(40)
+}
+
+model pemesanan {
+  id          Int      @id @default(autoincrement())
+  mobil_id    String?  @unique(map: "mobil_id") @db.VarChar(100)
+  nama_driver String?  @unique(map: "nama_driver") @db.VarChar(40)
+  waktu       String   @db.VarChar(30)
+  selesai     Boolean? @default(false)
+  deskripsi   String?  @db.VarChar(300)
+  ekspedisi   Boolean? @default(false)
+  driver      driver?  @relation(fields: [nama_driver], references: [nama_driver], onDelete: Restrict, onUpdate: Restrict, map: "fk_mobil_driver")
+  mobils      mobils?  @relation(fields: [mobil_id], references: [nama_mobil], onDelete: Restrict, onUpdate: Restrict, map: "fk_mobil_pesan")
+}
+
+model sessions {
+  sid     String   @id @db.VarChar(255)
+  sess    String   @db.LongText
+  expired DateTime @db.DateTime(0)
+
+  @@index([expired], map: "sessions_expired_index")
+}
